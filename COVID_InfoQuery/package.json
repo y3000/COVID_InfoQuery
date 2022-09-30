@@ -1,0 +1,26 @@
+{
+  "devDependencies": {
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-angular": "^17.1.0",
+    "commitizen": "^4.2.5",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^8.0.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+   "scripts": {
+     "commit": "git-cz",
+     "release": "standard-version --release-as",
+     "release:100": "npm run release -- major",
+     "release:010": "npm run release -- minor",
+     "release:001": "npm run release -- patch"
+    },
+	 "husky": {
+	   "hooks": {
+	     "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+	   }
+	 }
+}
