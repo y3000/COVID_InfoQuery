@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view @click="toPolicy()">
 		<!-- 出行政策查询 -->
 		出行政策查询
 	</view>
@@ -12,6 +12,14 @@
 			return {
 				
 			};
+		},
+		methods:{
+			toPolicy() {
+				console.log("click")
+				uni.navigateTo({
+					url: "/pages/policyQuery/policyQuery",
+				});
+			}
 		}
 	}
 </script>

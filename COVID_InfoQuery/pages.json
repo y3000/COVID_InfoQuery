@@ -17,6 +17,12 @@
 			"style": {
 				"navigationBarTitleText": "肺炎同程查询"
 			}
+		},
+		{
+			"path": "pages/policyQuery/policyQuery",
+			"style": {
+				"navigationBarTitleText": "出行政策查询"
+			}
 		}
 	],
 	"globalStyle": {
