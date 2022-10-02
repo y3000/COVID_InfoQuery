@@ -93,5 +93,6 @@
 	}
 	.dynamicData,.news,.policyQuery{
 		margin-top: 40rpx;
+		width: 100%;
 	}
 </style>
