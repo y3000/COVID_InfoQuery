@@ -18,7 +18,7 @@
 				"navigationBarTitleText": "肺炎同程查询"
 			}
 		}
-	],
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
