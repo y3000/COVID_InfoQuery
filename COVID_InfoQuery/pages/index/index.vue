@@ -18,7 +18,7 @@
 		</view>
 		<!-- 疫情新闻 -->
 		<view class="news">
-			<news></news>
+			<news :newsList = "newsList"></news>
 		</view>
 			
 	</view>
@@ -28,6 +28,7 @@
 	import {dynamicData} from '@/components/dynamicData/dynamicData.vue'
 	import {policyQuery} from '@/components/policyQuery/policyQuery.vue'
 	import {news} from '@/components/news/news.vue'
+	import {getnewsList} from '@/utils/request.js'
 	export default {
 		data() {
 			return {
@@ -36,10 +37,15 @@
 				"../../static/icon/faq.png",
 				"../../static/icon/trip.png",
 				],
+				newsList:[],//新闻数据
 			}
 		},
 		onLoad() {
-				
+			getnewsList((res)=>{
+				if(res.code===200){
+					this.newsList = res.newslist[0].news;
+				}
+			})	
 		},
 		methods: {
 			toPage(id){
@@ -56,7 +62,7 @@
 						url: "/pages/tripQuery/tripQuery",
 					});
 				}
-			}
+			},
 		}
 	}
 </script>
@@ -65,13 +71,12 @@
 	.content {
 		display: flex;
 		flex-direction: column;
-		align-items: center;
-		justify-content: space-around;
+		/* align-items: center; */
+		/* justify-content: space-around; */
 		max-width: 1400rpx;
 		margin: 0 auto;
 	}
 	.menu{
-		width: 100vw;
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
