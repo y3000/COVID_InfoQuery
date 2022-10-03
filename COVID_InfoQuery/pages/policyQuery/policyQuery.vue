@@ -142,11 +142,11 @@
 				idFrom = citys[this.index1].children[this.index2].value
 				idTo = citys[this.index3].children[this.index4].value
 				
-				axios({
+				uni.request({
 				  method: 'get',
 				  url: '/api/springTravel/query',
 				  data: {
-				    key: '2fc84fc60f639068c374a9d644ae2da2',
+				    key: '2ccaea817d00de15c4dbfdb3b9d2d302',
 				    from: '10191',
 					to:"10349"
 				  }
