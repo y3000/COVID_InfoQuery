@@ -11,16 +11,20 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-   "scripts": {
-     "commit": "git-cz",
-     "release": "standard-version --release-as",
-     "release:100": "npm run release -- major",
-     "release:010": "npm run release -- minor",
-     "release:001": "npm run release -- patch"
-    },
-	 "husky": {
-	   "hooks": {
-	     "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-	   }
-	 }
+  "scripts": {
+    "commit": "git-cz",
+    "release": "standard-version --release-as",
+    "release:100": "npm run release -- major",
+    "release:010": "npm run release -- minor",
+    "release:001": "npm run release -- patch"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "dependencies": {
+    "echarts": "^5.4.0",
+    "mpvue-echarts": "^0.3.2"
+  }
 }
