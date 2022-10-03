@@ -32,22 +32,22 @@ export default {
         padding: [15,10,0,15],
 		dataLabel: false,//不显示顶部数据
 		dataPointShape: false,
-        legend: {},
+        legend: {
+			show: true,
+			position: "top",
+			float: "left",
+			borderRadius: 50
+		},
         xAxis: {
 			rotateLabel: true,
 			rotateAngle: 45,
-			labelCount: 7,
-			disableGrid: true
+			labelCount: 5,
+			disableGrid: true,
+			boundaryGap: "center",
         },
         yAxis: {
-			// disabled: true,
           gridType: "dash",
-          dashLength: 2,
-		  data: [
-			  {
-				// unit: "%",
-			  }
-			]
+          dashLength: 2
         },
         extra: {
           line: {
@@ -70,8 +70,8 @@ export default {
             series: this.series
           };
 		  
-		  console.log( this.categories);
-		  console.log( this.series);
+		  // console.log( this.categories);
+		  // console.log( this.series);
         this.chartData = JSON.parse(JSON.stringify(res));
       }, 500);
     },

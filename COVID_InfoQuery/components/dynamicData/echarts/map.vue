@@ -1,8 +1,9 @@
 <template>
 	<view class="content">
 		<view class="charts-box" style="height: 400px;">
-			<qiun-data-charts type="map" :canvas2d="true" :opts="opts" canvasId="mapma" :chartData="chartsDataMap"
-				tooltipFormat="tooltipFun" @getIndex="getIndex" />
+			<qiun-data-charts type="map" :opts="opts" canvasId="mapma" :chartData="chartsDataMap"
+				tooltipFormat="tooltipFun"  />
+				<!-- @getIndex="getIndex" -->
 		</view>
 	</view>
 </template>
@@ -50,7 +51,7 @@
 						activeBorderColor: "#F04864",
 						activeFillColor: "#FACC14",
 						activeFillOpacity: 1,
-						mercator: false
+						mercator: true
 					  },
 					  tooltip: {
 						showBox: true,
@@ -78,7 +79,7 @@
 				  }
 			};
 		},
-		created() {
+		mounted() {
 			 this.getServerData();
 			 
 			//自定义格式化Tooltip显示内容  
@@ -91,7 +92,7 @@
 				setTimeout(() => {
 					console.log(777);
 					let data = this.allCitys;
-					console.log(this.allCitys);
+					// console.log(this.allCitys);
 					let mapseries = mapdata.features.map((item) => {
 						//根据接口数据查找到当前匹配的数据
 						let dataItem = data.find((x) => x.name.substring(0,2) == item.properties.name || x.name.substring(0,3) == item.properties.name)||{
@@ -101,11 +102,12 @@
 						//添加到 json data中
 						item.data = dataItem
 						//设置颜色
-						item.color = this.addColor(dataItem?.value || 0)
+						item.color = this.addColor(dataItem.value)
 						return item
 					})
-
-					this.chartsDataMap.series = mapseries
+					// console.log(mapseries);
+					this.chartsDataMap.series = mapseries;
+					console.log(this.chartsDataMap.series);
 				}, 500);
 			},
 			// 根据条件添加颜色
@@ -125,9 +127,9 @@
 				}
 			},
 			//鼠标点击地图 会触发该事件
-			getIndex(e) { // 点击地图进行操作
-				console.log(e, "===uCharts====")
-			}
+			// getIndex(e) { // 点击地图进行操作
+			// 	console.log(e, "===uCharts====")
+			// }
 		}
 	};
 </script>

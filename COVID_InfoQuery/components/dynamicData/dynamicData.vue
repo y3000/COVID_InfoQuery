@@ -1,101 +1,113 @@
 <template>
 	<view class="all-container">
+		
 		<!-- 国内外疫情数据 -->
-		<view class="domestic">
-			<view class="case-num">
-				<view class="title">
-					<span>国内疫情</span>
+		<ir-tabs :navs="navs" :multiple="true" height="100%" fontSize="35rpx">
+			<template v-slot:page1>
+				<view class="domestic">
+					<view class="case-num">
+						<view class="title">
+							<span>国内疫情</span>
+						</view>
+						<view class="num">
+							<ul class="count">
+								<li>
+									<view class="create-item">
+										<span>现有确诊</span>
+										<view class="strong" style="color: rgb(247, 76, 49)">{{_comma(caseNumData.currentConfirmedCount)}}</view>
+										<view class="create-count">
+											较昨日
+											<em style="color: rgb(247, 76, 49)">{{caseNumData.currentConfirmedIncr > 0 ? '+'+_comma(caseNumData.currentConfirmedIncr) : _comma(caseNumData.currentConfirmedIncr)}}</em>
+										</view>
+									</view>
+								</li>
+								<li>
+									<view class="create-item">
+										<span>现有无症状</span>
+										<view class="strong" style="color: rgb(247, 130, 7)">{{_comma(caseNumData.seriousCount)}}</view>
+										<view class="create-count">
+											较昨日
+											<em style="color: rgb(247, 130, 7)">{{caseNumData.seriousIncr > 0 ? '+'+_comma(caseNumData.seriousIncr) : _comma(caseNumData.seriousIncr)}}</em>
+										</view>
+									</view>
+								</li>
+								<li>
+									<view class="create-item">
+										<span>累计境外</span>
+										<view class="strong" style="color: rgb(162, 90, 78)">{{_comma(caseNumData.suspectedCount)}}</view>
+										<view class="create-count">
+											较昨日
+											<em style="color: rgb(162, 90, 78)">{{caseNumData.suspectedIncr > 0 ? '+'+_comma(caseNumData.suspectedIncr) : _comma(caseNumData.suspectedIncr)}}</em>
+										</view>
+									</view>
+								</li>
+								<li>
+									<view class="create-item">
+										<span>累计确诊</span>
+										<view class="strong" style="color: rgb(174, 33, 44)">{{_comma(caseNumData.confirmedCount)}}</view>
+										<view class="create-count">
+											较昨日
+											<em style="color: rgb(174, 33, 44)">{{caseNumData.confirmedIncr > 0 ? '+'+_comma(caseNumData.confirmedIncr) : _comma(caseNumData.confirmedIncr)}}</em>
+										</view>
+									</view>
+								</li>
+								<li>
+									<view class="create-item">
+										<span>累计死亡</span>
+										<view class="strong" style="color: rgb(93, 112, 146)">{{_comma(caseNumData.deadCount)}}</view>
+										<view class="create-count">
+											较昨日
+											<em style="color: rgb(93, 112, 146)">{{caseNumData.deadIncr > 0 ? '+'+_comma(caseNumData.deadIncr) : _comma(caseNumData.deadIncr)}}</em>
+										</view>
+									</view>
+								</li>
+								<li>
+									<view class="create-item">
+										<span>累计治愈</span>
+										<view class="strong" style="color: rgb(40, 183, 163)">{{_comma(caseNumData.curedCount)}}</view>
+										<view class="create-count">
+											较昨日
+											<em style="color: rgb(40, 183, 163)">{{caseNumData.curedIncr > 0 ? '+'+_comma(caseNumData.curedIncr) : _comma(caseNumData.curedIncr)}}</em>
+										</view>
+									</view>
+								</li>
+							</ul>
+						</view>
+						<!-- 数据最后更新时间  -->
+						<view class="time">
+							<view class="detail">
+								<span>数据截至 {{formatData(caseNumData.modifyTime)}} 更新</span>
+							</view>
+						</view>
+					</view>
+					<!-- 全国趋势 -->
+					<view class="num">
+						<Map :allCitys="allCitys"></Map>
+					</view>
+					
+					<view class="title">
+						<span>全国疫情趋势图</span>
+					</view>
+					<view class="ui-virus-select">
+						<view>
+							<swiper class="ui-virusinfos" @change="swiperChange" :current="current">
+								<swiper-item class="ui-virusinfo-item" v-for="(item,index) in trend" :key="index">
+									<chinaDayAdd :categories="categories" :series=item></chinaDayAdd>
+								</swiper-item>
+							</swiper>
+						</view>
+						<view class="ui-virus-name-list">
+							<view class="ui-virus-name-item" v-for="(item,index) in virusTypes" :key="index" :class="{active:current==index}" :data-current="index" @tap="tabChange">{{item.virustype}}</view>
+						</view>
+					</view>
+					
 				</view>
-				<view class="num">
-					<ul class="count">
-						<li>
-							<view class="create-item">
-								<span>现有确诊</span>
-								<view class="strong" style="color: rgb(247, 76, 49)">{{_comma(caseNumData.currentConfirmedCount)}}</view>
-								<view class="create-count">
-									较昨日
-									<em style="color: rgb(247, 76, 49)">{{caseNumData.currentConfirmedIncr > 0 ? '+'+_comma(caseNumData.currentConfirmedIncr) : _comma(caseNumData.currentConfirmedIncr)}}</em>
-								</view>
-							</view>
-						</li>
-						<li>
-							<view class="create-item">
-								<span>现有无症状</span>
-								<view class="strong" style="color: rgb(247, 130, 7)">{{_comma(caseNumData.seriousCount)}}</view>
-								<view class="create-count">
-									较昨日
-									<em style="color: rgb(247, 130, 7)">{{caseNumData.seriousIncr > 0 ? '+'+_comma(caseNumData.seriousIncr) : _comma(caseNumData.seriousIncr)}}</em>
-								</view>
-							</view>
-						</li>
-						<li>
-							<view class="create-item">
-								<span>累计境外</span>
-								<view class="strong" style="color: rgb(162, 90, 78)">{{_comma(caseNumData.suspectedCount)}}</view>
-								<view class="create-count">
-									较昨日
-									<em style="color: rgb(162, 90, 78)">{{caseNumData.suspectedIncr > 0 ? '+'+_comma(caseNumData.suspectedIncr) : _comma(caseNumData.suspectedIncr)}}</em>
-								</view>
-							</view>
-						</li>
-						<li>
-							<view class="create-item">
-								<span>累计确诊</span>
-								<view class="strong" style="color: rgb(174, 33, 44)">{{_comma(caseNumData.confirmedCount)}}</view>
-								<view class="create-count">
-									较昨日
-									<em style="color: rgb(174, 33, 44)">{{caseNumData.confirmedIncr > 0 ? '+'+_comma(caseNumData.confirmedIncr) : _comma(caseNumData.confirmedIncr)}}</em>
-								</view>
-							</view>
-						</li>
-						<li>
-							<view class="create-item">
-								<span>累计死亡</span>
-								<view class="strong" style="color: rgb(93, 112, 146)">{{_comma(caseNumData.deadCount)}}</view>
-								<view class="create-count">
-									较昨日
-									<em style="color: rgb(93, 112, 146)">{{caseNumData.deadIncr > 0 ? '+'+_comma(caseNumData.deadIncr) : _comma(caseNumData.deadIncr)}}</em>
-								</view>
-							</view>
-						</li>
-						<li>
-							<view class="create-item">
-								<span>累计治愈</span>
-								<view class="strong" style="color: rgb(40, 183, 163)">{{_comma(caseNumData.curedCount)}}</view>
-								<view class="create-count">
-									较昨日
-									<em style="color: rgb(40, 183, 163)">{{caseNumData.curedIncr > 0 ? '+'+_comma(caseNumData.curedIncr) : _comma(caseNumData.curedIncr)}}</em>
-								</view>
-							</view>
-						</li>
-					</ul>
-				</view>
-                <!-- 数据最后更新时间  -->
-                <view class="time">
-                    <view class="detail">
-                        <span>数据截至 {{formatData(caseNumData.modifyTime)}} 更新</span>
-                    </view>
-                </view>
-			</view>
-			<!-- 全国趋势 -->
-			<Map :allCitys="allCitys"></Map>
-			<!-- <chinaDayAdd :categories="categories" :series="series"></chinaDayAdd> -->
-			
-			<view class="ui-virus-select">
-				<view>
-					<swiper class="ui-virusinfos" @change="swiperChange" :current="current">
-						<swiper-item class="ui-virusinfo-item" v-for="(item,index) in trend">
-							<chinaDayAdd :categories="categories" :series=item></chinaDayAdd>
-						</swiper-item>
-					</swiper>
-				</view>
-				<view class="ui-virus-name-list">
-					<view class="ui-virus-name-item" v-for="(item,index) in virusTypes" :class="{active:current==index}" :data-current="index" @tap="tabChange">{{item.virustype}}</view>
-				</view>
-			</view>
-			<!-- 各个省份的疫情数据 -->
-			
-		</view>
+			</template>
+	
+			<template v-slot:page2>
+				<view>page2</view>
+			</template>
+		</ir-tabs>
 	</view>
 </template>
 
@@ -106,6 +118,7 @@
 		name:"dynamicData",
 		data() {
 			return {
+				navs: ['国内疫情', '国外疫情'],
 				caseNumData: {
 				  modifyTime: "", //更新时间
 				  currentConfirmedCount: "", // 现存确诊人数
@@ -148,9 +161,9 @@
 					key: "9a064807767ddfbdaa5d343e223e983a"
 				},
 			}).then((res) => {
-				console.log(res[1]);
+				// console.log(res[1]);
 				if (res[1].statusCode === 200) {
-					console.log(22);
+					// console.log(22);
 				  let desc = res[1].data.newslist[0].desc;
 				  //疫情病例具体数目
 				  this.caseNumData.modifyTime = desc.modifyTime;
@@ -178,7 +191,7 @@
 					showapi_sign: "31fab5eed9884f5ba6c9504c370033f9"
 				},
 			}).then((res) => {
-				console.log(res[1]);
+				// console.log(res[1]);
 				if (res[1].statusCode === 200) {
 					let todayDetailList = res[1].data.showapi_res_body.todayDetailList;
 					for (let i = 0; i < todayDetailList.length; i++) {
@@ -194,11 +207,14 @@
 			})
 			// 趋势图
 			uni.request({
-				url:"https://view.inews.qq.com/g2/getOnsInfo?name=disease_other"
+				url:"/g2/getOnsInfo",
+				data: {
+					name: "disease_other"
+				}
 			}).then((res)=>{
-				console.log(res[1]);
+				// console.log(res[1]);
 				var data = eval('('+res[1].data.data+')');
-				console.log(data);
+				// console.log(data);
 				if (res[1].statusCode === 200) {
 					let chinaDayAddList = data.chinaDayAddList;
 					let chinaDayList = data.chinaDayList;
@@ -226,7 +242,7 @@
 					series.push({name:"死亡率",data:deadRate})
 					series.push({name:"治愈率",data:healRate})
 					this.trend.push(series);
-					console.log(this.trend);
+					// console.log(this.trend);
 				}
 				// dataResult = JSON.parse(data);
 			})
@@ -275,13 +291,19 @@
 		background-color: #fff;
 		border-radius: 20rpx;
 		display: block;
+		width: 100%;
+		max-width: 1400rpx;
 	}
-	
+	.domestic{
+		width: 100%;
+		max-width: 1400rpx;
+	}
 	.title {
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 0 0 10px 10px;
+		margin-top: 10px;
     }
 
     .title span {
