@@ -15,7 +15,7 @@
 				<view class="uni-list-cell">
 					<view class="uni-list-cell-db">
 						<picker mode='multiSelector' @columnchange='columnChangeFrom' @change="bindPickerChangeFrom"  :range="cityListFrom" range-key="text">
-							<view class="uni-input from">
+							<view class="uni-input from" @click="tapFrom">
 								<text>出发地</text>
 								<view>{{showCityFrom}}</view>
 							</view>
@@ -28,7 +28,7 @@
 				<view class="uni-list-cell">
 					<view class="uni-list-cell-db">
 						<picker mode='multiSelector' @columnchange='columnChangeTo' @change="bindPickerChangeTo"  :range="cityListTo" range-key="text">
-							<view class="uni-input from">
+							<view class="uni-input from" @click="tapTo">
 								<text>到达地</text>
 								<view>{{showCityTo}}</view>
 							</view>
@@ -64,8 +64,6 @@
 				this.cityListFrom[1].push(item.text)
 				this.cityListTo[1].push(item.text)
 			})
-			// this.showCityFrom = "222"
-			// this.showCityTo = "222"
 		},
 		data() {
 			return {
@@ -144,20 +142,24 @@
 				let idFrom,idTo
 				idFrom = citys[this.index1].children[this.index2].value
 				idTo = citys[this.index3].children[this.index4].value
-				// axios.get("?key=2ccaea817d00de15c4dbfdb3b9d2d302&from=10191&to=10349").then(msg=>{
-				// 	console.log(msg)
-				// })
-				uni.request({
-					url: "http://apis.juhe.cn/springTravel/query",
-					method:"GET",
-					data: {
-						key: "2ccaea817d00de15c4dbfdb3b9d2d302",
-						from:"10191",
-						to:"10191"
-					},
+				
+				axios({
+				  method: 'get',
+				  url: '',
+				  data: {
+				    key: '2ccaea817d00de15c4dbfdb3b9d2d302',
+				    from: '10191',
+					to:"10349"
+				  }
 				}).then(msg=>{
 					console.log(msg)
-				})
+				});
+			},
+			tapFrom:function(e){
+				this.showCityFrom = this.cityListFrom[1][0]
+			},
+			tapTo:function(e){
+				this.showCityTo = this.cityListTo[1][0]
 			}
 		}
 	}
