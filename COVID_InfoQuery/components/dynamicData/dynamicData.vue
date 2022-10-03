@@ -78,20 +78,21 @@
                 </view>
 			</view>
 			<!-- 全国趋势 -->
-			<Map></Map>
+			<Map :allCitys="allCitys"></Map>
+			<!-- <chinaDayAdd :categories="categories" :series="series"></chinaDayAdd> -->
 			
-			<!-- <view class="ui-virus-select">
+			<view class="ui-virus-select">
 				<view>
 					<swiper class="ui-virusinfos" @change="swiperChange" :current="current">
-						<swiper-item class="ui-virusinfo-item" v-for="(item,index) in virusinfos">
-							<Map></Map>
+						<swiper-item class="ui-virusinfo-item" v-for="(item,index) in trend">
+							<chinaDayAdd :categories="categories" :series=item></chinaDayAdd>
 						</swiper-item>
 					</swiper>
 				</view>
 				<view class="ui-virus-name-list">
 					<view class="ui-virus-name-item" v-for="(item,index) in virusTypes" :class="{active:current==index}" :data-current="index" @tap="tabChange">{{item.virustype}}</view>
 				</view>
-			</view> -->
+			</view>
 			<!-- 各个省份的疫情数据 -->
 			
 		</view>
@@ -100,6 +101,7 @@
 
 <script>
 	import Map from "../dynamicData/echarts/map.vue"
+	import chinaDayAdd from "../dynamicData/echarts/chinaDayAdd.vue"
 	export default {
 		name:"dynamicData",
 		data() {
@@ -120,31 +122,24 @@
 				  seriousIncr: "", //相比昨天现存无症状人数
 
 				},
+				allCitys:[],//中国地图城市
+				categories:[],//趋势图日期
+				trend:[],//趋势图数据
 				visible: false,
-								current:0,
-								virusTypes:[{
-									virustype:"小面包"
-									},{
-										virustype:"中面包"
-									},{
-										virustype:"小货车"
-									},{
-										virustype:"中货车"
-								}],
-								virusinfos:[{
-									virusinfo:"小面包"
-									},{
-										virusinfo:"中面包"
-									},{
-										virusinfo:"小货车"
-									},{
-										virusinfo:"中货车"
-								}]
+				current:0,
+				virusTypes:[{
+					virustype:"全国疫情新增趋势"
+					},{
+						virustype:"全国累计治愈死亡"
+					},{
+						virustype:"治愈率死亡率"
+					}]
 				
 			};
 		},
 		components: {
-			Map
+			Map,
+			chinaDayAdd
 		},
 		mounted() {
 			uni.request({
@@ -176,33 +171,66 @@
 			}).catch((error) => {
 				console.log(error);
 			})
-			// uni.request({
-			// 	url:"http://route.showapi.com/2217-2",
-			// 	data: {
-			// 		showapi_appid: 1184469,
-			// 		showapi_sign: "31fab5eed9884f5ba6c9504c370033f9"
-			// 	},
-			// }).then((res) => {
-			// 	console.log(res[1]);
-			// 	if (res[1].statusCode === 200) {
-			// 		}
-					
-			// }).catch((error) => {
-			// 	console.log(error);
-			// })
 			uni.request({
-				url:"http://wuliang.art/ncov/statistics/getProvinceHistoryList",
+				url:"http://route.showapi.com/2217-2",
 				data: {
-					provinceName: "陕西"
+					showapi_appid: 1184469,
+					showapi_sign: "31fab5eed9884f5ba6c9504c370033f9"
 				},
 			}).then((res) => {
 				console.log(res[1]);
 				if (res[1].statusCode === 200) {
+					let todayDetailList = res[1].data.showapi_res_body.todayDetailList;
+					for (let i = 0; i < todayDetailList.length; i++) {
+						let temp = {
+							name: todayDetailList[i].provinceName,
+							value: todayDetailList[i].currentConfirmedNum,
+						};
+						this.allCitys.push(temp);
 					}
-					
+				}
 			}).catch((error) => {
 				console.log(error);
 			})
+			// 趋势图
+			uni.request({
+				url:"https://view.inews.qq.com/g2/getOnsInfo?name=disease_other"
+			}).then((res)=>{
+				console.log(res[1]);
+				var data = eval('('+res[1].data.data+')');
+				console.log(data);
+				if (res[1].statusCode === 200) {
+					let chinaDayAddList = data.chinaDayAddList;
+					let chinaDayList = data.chinaDayList;
+					let series = [];
+					let confirm = [],dead = [],deadRate = [],heal = [],healRate = [],importedCase = [];
+					for (let i = 0; i < chinaDayAddList.length; i++) {
+						this.categories.push(chinaDayAddList[i].date);//趋势图日期
+						confirm.push(chinaDayAddList[i].confirm);//新增
+						importedCase.push(chinaDayAddList[i].importedCase);//新增境外
+					}
+					series.push({name:"新增确诊",data:confirm})
+					series.push({name:"新增境外",data:importedCase})
+					this.trend.push(series);
+					for (let i = 0; i < chinaDayList.length; i++) {
+						dead.push(chinaDayList[i].dead);//死亡
+						deadRate.push(chinaDayList[i].deadRate);//死亡率
+						heal.push(chinaDayList[i].heal);//治愈
+						healRate.push(chinaDayList[i].healRate);//治愈率
+					}
+					series = [];
+					series.push({name:"死亡",data:dead})
+					series.push({name:"治愈",data:heal})
+					this.trend.push(series);
+					series = [];
+					series.push({name:"死亡率",data:deadRate})
+					series.push({name:"治愈率",data:healRate})
+					this.trend.push(series);
+					console.log(this.trend);
+				}
+				// dataResult = JSON.parse(data);
+			})
+			
 		},
 		methods:{
 			formatData(time) {
@@ -355,7 +383,8 @@
 		align-items: center;
 	}
 	.ui-virus-name-item{
-		width: 25%;
+		width: 33%;
+		padding: 0 50rpx;
 		text-align: center;
 	}
 	.ui-virus-name-list .active{
