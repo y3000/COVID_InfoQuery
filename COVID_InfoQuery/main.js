@@ -3,6 +3,9 @@ import * as request from './utils/request'
 
 // #ifndef VUE3
 import Vue from 'vue'
+
+
+
 Vue.config.productionTip = false
 Vue.prototype.$request = request;
 App.mpType = 'app'

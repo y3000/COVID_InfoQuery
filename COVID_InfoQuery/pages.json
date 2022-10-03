@@ -17,6 +17,12 @@
 			"style": {
 				"navigationBarTitleText": "肺炎同程查询"
 			}
+		},
+		{
+			"path": "pages/policyQuery/policyQuery",
+			"style": {
+				"navigationBarTitleText": "出行政策查询"
+			}
 		}
 	    ,{
             "path" : "pages/newsInfo/newsInfo",
@@ -33,6 +39,7 @@
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
+		
 	},
 	"uniIdRouter": {}
 }
