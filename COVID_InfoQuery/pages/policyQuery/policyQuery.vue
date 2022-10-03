@@ -46,8 +46,7 @@
 
 <script>
 	import citys from "./../../utils/data/cityId.js"
-	import axios from "./../../utils/request.js"
-	console.log(axios)
+	import axios from "axios"
 	export default {
 		name:"policyQuery",
 		mounted(){
@@ -145,9 +144,9 @@
 				
 				axios({
 				  method: 'get',
-				  url: '',
+				  url: '/api/springTravel/query',
 				  data: {
-				    key: '2ccaea817d00de15c4dbfdb3b9d2d302',
+				    key: '2fc84fc60f639068c374a9d644ae2da2',
 				    from: '10191',
 					to:"10349"
 				  }
