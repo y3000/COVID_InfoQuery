@@ -40,8 +40,8 @@ export default {
 		},
         xAxis: {
 			rotateLabel: true,
-			rotateAngle: 45,
-			labelCount: 5,
+			rotateAngle: 58,
+			labelCount: 7,
 			disableGrid: true,
 			boundaryGap: "center",
         },
