@@ -69,5 +69,11 @@
         "enable" : false
     },
     "vueVersion" : "2",
+    "h5" : {
+        "devServer" : {
+            "https" : false
+        }
+    }，
     "locale" : "zh-Hans"
 }
+

@@ -14,5 +14,7 @@
 
 <style>
 	/*每个页面公共css */
-	
+	html {
+		max-width: 750rpx;
+	}
 </style>

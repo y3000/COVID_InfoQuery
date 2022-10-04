@@ -4,7 +4,7 @@ import * as request from './utils/request'
 // #ifndef VUE3
 import Vue from 'vue'
 
-
+// import './mock/mockServer.js'
 
 Vue.config.productionTip = false
 Vue.prototype.$request = request;

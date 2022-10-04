@@ -7,6 +7,12 @@
 			}
 		},
 		{
+			"path": "pages/nat/nat",
+			"style": {
+				"navigationBarTitleText": "核酸检测机构"
+			}
+		},
+		{
 			"path": "pages/infoFAQ/infoFAQ",
 			"style": {
 				"navigationBarTitleText": "防疫知识库"
