@@ -90,7 +90,7 @@
 		methods: {
 			getServerData() {
 				setTimeout(() => {
-					console.log(777);
+					// console.log(777);
 					let data = this.allCitys;
 					// console.log(this.allCitys);
 					let mapseries = mapdata.features.map((item) => {
@@ -107,11 +107,12 @@
 					})
 					// console.log(mapseries);
 					this.chartsDataMap.series = mapseries;
-					console.log(this.chartsDataMap.series);
+					// console.log(this.chartsDataMap.series);
 				}, 500);
 			},
 			// 根据条件添加颜色
 			addColor(count) {
+				// console.log(66);
 				if (count >= 10000) {
 					return '#910606';
 				} else if (count > 1000) {
