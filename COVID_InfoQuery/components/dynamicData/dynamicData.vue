@@ -92,7 +92,7 @@
 						<view>
 							<swiper class="ui-virusinfos" @change="swiperChange" :current="current">
 								<swiper-item class="ui-virusinfo-item" v-for="(item,index) in trend" :key="index">
-									<chinaDayAdd :categories="categories" :series=item></chinaDayAdd>
+									<chinaDayAdd :categories="categories" :series=item> </chinaDayAdd>
 								</swiper-item>
 							</swiper>
 						</view>
@@ -105,7 +105,34 @@
 			</template>
 	
 			<template v-slot:page2>
-				<view>page2</view>
+				<view class="select">
+					按国家查看
+				</view>
+				<view class="table">
+					<uni-table stripe emptyText="暂无更多数据">
+						<!-- 表头行 -->
+						<uni-tr>
+							<uni-th align="center" width="50" style="background-color: rgb(245,245,245);">地区</uni-th>
+							<uni-th align="center" width="80" sortable @sort-change="sort_change_1" class="th" style="color: rgb(247, 76, 49);background-color: rgb(253, 241, 237) ">现存确诊</uni-th>
+							<uni-th align="center" width="80" sortable @sort-change="sort_change_2" class="th"  style="color: rgb(174, 33, 44);background-color: rgb(248, 225, 225)">累计确诊</uni-th>
+							<uni-th align="center" width="80" sortable @sort-change="sort_change_3" class="th" style="color: rgb(40, 183, 163);background-color: rgb(227, 252, 246)">治愈</uni-th>
+							<uni-th align="center" width="80" sortable @sort-change="sort_change_4" class="th" style="color: rgb(93, 112, 146);background-color:rgb(219, 230, 248)">死亡</uni-th>
+						</uni-tr>
+						<!-- 表格数据行 -->
+						<uni-tr v-for="(item,index) in worldData" :key="index" class="table-td">
+							<uni-td align="center" class="td">{{item.provinceName}}</uni-td>
+							<uni-td align="center" class="td">{{item.currentConfirmedCount}}</uni-td>
+							<uni-td align="center" class="td">{{item.confirmedCount}}</uni-td>
+							<uni-td align="center" class="td">{{item.curedCount}}</uni-td>
+							<uni-td align="center" class="td">{{item.deadCount}}</uni-td>
+						</uni-tr>
+					
+					</uni-table>
+					<view class="all">
+						<uni-load-more iconType="circle" :status="status" :contentText="contentText" @clickLoadMore="clickLoadMore"> </uni-load-more>
+					</view>
+				</view>
+				
 			</template>
 		</ir-tabs>
 	</view>
@@ -146,7 +173,16 @@
 						virustype:"全国累计治愈死亡"
 					},{
 						virustype:"治愈率死亡率"
-					}]
+					}],
+					
+				worldData:[],
+				worldDataAll:[],
+				status: "more"	,
+				contentText: {
+					contentdown: '显示全部',
+					contentrefresh: '加载中',
+					contentnomore: '没有更多'
+				}
 				
 			};
 		},
@@ -246,9 +282,23 @@
 				}
 				// dataResult = JSON.parse(data);
 			})
+			uni.request({
+				url:"http://api.tianapi.com/ncovabroad/index",
+				data:{
+					key: "5dc22657a9bfb4b84957333fb7779e2e"
+				}
+			}).then((res)=>{
+				console.log("table",res[1]);
+				res = res[1].data;
+				if(res.code===200){
+					this.worldDataAll = res.newslist;
+					this.worldData = this.worldDataAll.slice(0,20)
+				}
+			})
 			
 		},
 		methods:{
+			
 			formatData(time) {
 				var date = new Date(time);
 				var YY = date.getFullYear() + "-";
@@ -274,6 +324,63 @@
 				}
 				return s;
 			},
+			sort_change_1(e){
+				if(e.order==='ascending'){
+					this.worldData = this.worldData.sort(function(a,b){
+						return a.currentConfirmedCount-b.currentConfirmedCount;
+					})
+				}else if(e.order==='descending'){
+					this.worldData = this.worldData.sort(function(a,b){
+						return b.currentConfirmedCount-a.currentConfirmedCount;
+					})
+					
+				}
+			},
+			sort_change_2(e){
+				if(e.order==='ascending'){
+					this.worldData = this.worldData.sort(function(a,b){
+						return a.confirmedCount - b.confirmedCount;
+					})
+				}else if(e.order==='descending'){
+					this.worldData = this.worldData.sort(function(a,b){
+						return b.confirmedCount - a.confirmedCount;
+					})
+					
+				}
+			},
+			sort_change_3(e){
+				if(e.order==='ascending'){
+					this.worldData = this.worldData.sort(function(a,b){
+						return a.curedCount - b.curedCount;
+					})
+				}else if(e.order==='descending'){
+					this.worldData = this.worldData.sort(function(a,b){
+						return b.curedCount - a.curedCount;
+					})
+					
+				}
+			},
+			sort_change_4(e){
+				if(e.order==='ascending'){
+					this.worldData = this.worldData.sort(function(a,b){
+						return a.deadCount - b.deadCount;
+					})
+				}else if(e.order==='descending'){
+					this.worldData = this.worldData.sort(function(a,b){
+						return b.deadCount - a.deadCount;
+					})
+					
+				}
+			},
+			clickLoadMore(e){
+				let status = e.detail.status;
+				if(status = 'more') {
+					this.status = '';
+					this.worldData = this.worldDataAll;
+				}
+				
+			},
+			
 			tabChange:function(e){
 					var index = e.target.dataset.current || e.currentTarget.dataset.current;
 					this.current=index;
@@ -282,7 +389,8 @@
 					var index=e.target.current || e.detail.current;
 					this.current = index;
 				}
-			}
+			},
+			
 	}
 </script>
 
@@ -413,4 +521,19 @@
 		background-color: antiquewhite;
 		border-radius: 10rpx;
 	}
+	.select{
+		margin: 20rpx 0;
+		font-size: 28rpx;
+	}
+	.table{
+		padding: 10rpx;
+	}
+	.table-td .td{
+		font-size: 24rpx;
+	}
+	.table .th{
+		font-size: 24rpx;
+		
+	}
+	
 </style>
