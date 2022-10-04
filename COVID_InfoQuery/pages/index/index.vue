@@ -45,6 +45,9 @@
 			toPage(id){
 				if(id===0){
 					// 跳转至外部链接
+					uni.navigateTo({
+						url: '/pages/nat/nat'
+					})
 				}
 				else if(id===1){
 					uni.navigateTo({
