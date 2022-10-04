@@ -1,6 +1,6 @@
 {
     "name" : "COVID_InfoQuery",
-    "appid" : "__UNI__573BDC3",
+    "appid" : "",
     "description" : "",
     "versionName" : "1.0.0",
     "versionCode" : "100",
@@ -50,7 +50,7 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wxb2388c607897f548",
+        "appid" : "",
         "setting" : {
             "urlCheck" : false
         },

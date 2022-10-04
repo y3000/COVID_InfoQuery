@@ -93,7 +93,6 @@
 		}
 	}
 </script>
-
 <style lang="less">
 	.info-container {
 		padding: 10rpx;
