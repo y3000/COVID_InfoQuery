@@ -1,6 +1,6 @@
 import App from './App'
+// import "@/mock/mockServe"
 import * as request from './utils/request'
-
 // #ifndef VUE3
 import Vue from 'vue'
 
@@ -17,6 +17,7 @@ app.$mount()
 
 // #ifdef VUE3
 import { createSSRApp } from 'vue'
+
 export function createApp() {
   const app = createSSRApp(App)
   return {
