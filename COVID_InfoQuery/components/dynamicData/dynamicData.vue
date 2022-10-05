@@ -187,7 +187,6 @@
 					</view>
 				</view>
 				
-			
 			</view>
 			
 		</view>
@@ -381,9 +380,9 @@
 				})
 			// 境外输入前十
 			uni.request({
-				url:"https://interface.sina.cn/news/wap/fymap2020_data.d.json",
+				url:"/jwsr",
 			}).then((res)=>{
-				console.log(res[1]);
+				// console.log(res[1]);
 				if (res[1].statusCode === 200) {
 					let jwsrTop = res[1].data.data.jwsrTop;
 					let data = [];
