@@ -7,6 +7,12 @@
 			}
 		},
 		{
+			"path": "pages/nat/nat",
+			"style": {
+				"navigationBarTitleText": "核酸检测机构"
+			}
+		},
+		{
 			"path": "pages/infoFAQ/infoFAQ",
 			"style": {
 				"navigationBarTitleText": "防疫知识库"
@@ -17,6 +23,12 @@
 			"style": {
 				"navigationBarTitleText": "肺炎同程查询"
 			}
+		},
+		{
+			"path": "pages/policyQuery/policyQuery",
+			"style": {
+				"navigationBarTitleText": "出行政策查询"
+			}
 		}
 	    ,{
             "path" : "pages/newsInfo/newsInfo",
@@ -25,7 +37,6 @@
                 "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
             }
-            
         }
     ],
 	"globalStyle": {
@@ -33,6 +44,7 @@
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
+		
 	},
 	"uniIdRouter": {}
 }

@@ -1,3 +1,6 @@
+
+import "@/mock/mockServe.js"
+
 const key = "5dc22657a9bfb4b84957333fb7779e2e" //天行数据接口的key
 
 // 请求封装
@@ -82,4 +85,6 @@ const showError = error =>{
 	})
 }
 
-export const getnewsList = (callback) => get('http://api.tianapi.com//ncov/index?key='+ key,callback)
+export const getnewsList = (callback) => get('http://api.tianapi.com//ncov/index?key='+ key, callback)
+export const getTripQuery = (callback) => get("/mock/tripQuery", callback)
+
