@@ -75,7 +75,6 @@ export default {
 			  categories:this.areas,
 			   series:this.jwsr
           };
-		  
 		  // console.log( this.categories);
 		  console.log( this.jwsr);
         this.chartData = JSON.parse(JSON.stringify(res));
