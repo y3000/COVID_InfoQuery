@@ -24,12 +24,12 @@
 		/* width: 100vw; */
 		padding: 20rpx;
 		box-sizing: border-box;
-		color: #555;
 		font-weight: bold;
+		box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
 	}
 	button{
-		background-color: #07c160;
-		border:1rpx solid #07c160;
+		background-color: #007aff;
+		border:1rpx solid #007aff;
 		color:#fff;
 		text-align: center;
 		border-radius: 50rpx;

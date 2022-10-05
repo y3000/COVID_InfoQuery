@@ -859,4 +859,8 @@
 		font-size: 24rpx;
 
 	}
+	.topChart{
+		padding: 10rpx 0 ;
+		box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+	}
 </style>

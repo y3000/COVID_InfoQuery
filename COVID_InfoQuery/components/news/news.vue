@@ -2,8 +2,8 @@
 	<view class="content">
 		<view class="title">
 			<span>疫情热点</span>
-			<span>更多<img src="../../static/icon/more.png" alt="">
-			</span>
+			<!-- <span>更多<img src="../../static/icon/more.png" alt="">
+			</span> -->
 		</view>
 		<view class="news-item" v-for="(item,index) in newsList" :key="item.id" @click="toDetail(item.sourceUrl)">
 			<view class="tag">
@@ -60,17 +60,18 @@
 		padding: 20rpx 20rpx;
 		line-height: 40rpx;
 		font-size: 32rpx;
+		border-bottom: 1px solid #e3e3e3;
 	}
 	
 	.title span:first-child{
-		font-size: 40rpx;
+		font-size: 32rpx;
 		font-weight: 700;
 	}
-	.title span:last-child{
+	/* .title span:last-child{
 		position: absolute;
 		right: 30rpx;
 		color: #afafaf;
-	}
+	} */
 	.news-item{
 		position: relative;
 		height: 200rpx;
