@@ -25,9 +25,7 @@
 				//地图数据
 				chartsDataMap: {
 					series: []
-				},
-				  //这里的 opts 是图表类型 type="map" 的全部配置参数，您可以将此配置复制到 config-ucharts.js 文件中下标为 ['map'] 的节点中来覆盖全局默认参数。实际应用过程中 opts 只需传入与全局默认参数中不一致的【某一个属性】即可实现同类型的图表显示不同的样式，达到页面简洁的需求。
-				opts: {
+				},opts: {
 					timing: "easeOut",
 					duration: 1000,
 					rotate: false,
@@ -91,23 +89,35 @@
 			getServerData() {
 				setTimeout(() => {
 					// console.log(777);
-					let data = this.allCitys;
-					// console.log(this.allCitys);
+					let temp = this.allCitys;
+					let data = []
+						console.log(temp);
+					temp.map((item)=>{
+						console.log(item);
+						data.push(JSON.parse(JSON.stringify(item)));
+						return item
+					})
+						console.log(data);
 					let mapseries = mapdata.features.map((item) => {
 						//根据接口数据查找到当前匹配的数据
+						// console.log(data.find((x) => x.name.substring(0,2) == item.properties.name || x.name.substring(0,3) == item.properties.name));
 						let dataItem = data.find((x) => x.name.substring(0,2) == item.properties.name || x.name.substring(0,3) == item.properties.name)||{
 							name: item.properties.name, //地区
 							value: 0, //确诊人数
 						}
 						//添加到 json data中
 						item.data = dataItem
+						// console.log(dataItem);
+						// console.log(item.data);
 						//设置颜色
 						item.color = this.addColor(dataItem.value)
 						return item
 					})
 					// console.log(mapseries);
-					this.chartsDataMap.series = mapseries;
+					setTimeout(()=>{
+						this.chartsDataMap.series = mapseries;
 					// console.log(this.chartsDataMap.series);
+					},1000)
 				}, 500);
 			},
 			// 根据条件添加颜色

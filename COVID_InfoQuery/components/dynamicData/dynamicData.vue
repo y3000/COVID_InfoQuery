@@ -663,6 +663,11 @@
 		margin: 20rpx 0;
 		font-size: 28rpx;
 	}
+	.jwsr-top{
+		border: 1px solid #ebebeb;
+		border-radius: 5px;
+		box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+	}
 	.table{
 		padding: 10rpx;
 	}

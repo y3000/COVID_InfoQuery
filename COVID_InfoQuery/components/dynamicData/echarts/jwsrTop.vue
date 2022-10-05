@@ -25,39 +25,41 @@ export default {
         return {
 			chartData:{},
 			  opts: {
-				'legendShape': 'circle',
+				legendShape: 'circle',
 				dataLabel: false,
 				xAxis: {
-					max: 6500,
+					// max: 6500,
+					labelCount: 4,
+					disableGrid: true,
 				},
 				yAxis: {
-					// "disableGrid": false,
+					disableGrid: false,
 					// "showTitle": false,
 				},
 				extra: {
 					bar: {
-						"type": "group",
-						"width": 10,
-						"seriesGap": 2,
-						"categoryGap": 3,
-						"barBorderCircle": false,
-						"linearType": "none",
-						"linearOpacity": 1,
-						"colorStop": 0,
-						"activeBgColor": "#000000",
-						"activeBgOpacity": 0.08,
-						"meterBorde": 1,
-						"meterFillColor": "#FFFFFF"
+						type: "group",
+						width: 10,
+						seriesGap: 2,
+						categoryGap: 3,
+						barBorderCircle: false,
+						linearType: "none",
+						linearOpacity: 1,
+						colorStop: 0,
+						activeBgColor: "#000000",
+						activeBgOpacity: 0.08,
+						meterBorde: 1,
+						meterFillColor: "#FFFFFF"
 					}
 				},
-				"color": ['#FA541B'],
-				"legend": {
-					"show": false
+				color: ['#FA541B'],
+				legend: {
+					show: false
 				},
-				"title": {
-					"name": 940,
-					"fontSize": 48 / 2,
-					"color": "#323567"
+				title: {
+					name: 940,
+					fontSize: 48 / 2,
+					color: "#323567"
 				}
 			  }
 		}
@@ -73,7 +75,7 @@ export default {
 			   series:this.jwsr
           };
 		  // console.log( this.categories);
-		  console.log( this.jwsr);
+		  // console.log( this.jwsr);
         this.chartData = JSON.parse(JSON.stringify(res));
       }, 500);
     },
@@ -81,7 +83,6 @@ export default {
 } 
 </script>
 <style>
-	/* 请根据需求修改图表容器尺寸，如果父容器没有高度图表则会显示异常 */
 	.charts-box{
 	  width: 100%;
 	  height:300px;
