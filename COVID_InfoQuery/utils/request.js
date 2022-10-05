@@ -1,5 +1,5 @@
 
-import "@/mock/mockServe.js"
+// import "@/mock/mockServe.js"
 
 const key = "5dc22657a9bfb4b84957333fb7779e2e" //天行数据接口的key
 

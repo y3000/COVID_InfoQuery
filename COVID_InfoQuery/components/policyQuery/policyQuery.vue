@@ -21,8 +21,8 @@
 
 <style scoped>
 	.title{
-		width: 100vw;
-		padding: 40rpx;
+		/* width: 100vw; */
+		padding: 20rpx;
 		box-sizing: border-box;
 		color: #555;
 		font-weight: bold;
