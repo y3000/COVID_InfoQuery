@@ -89,13 +89,12 @@
 			getServerData() {
 				setTimeout(() => {
 					// console.log(777);
-					let temp = this.allCitys;
-					let data = []
-						console.log(temp);
-					temp.map((item)=>{
-						console.log(item);
-						data.push(JSON.parse(JSON.stringify(item)));
-						return item
+					console.log(JSON.parse(JSON.stringify(this.allCitys)));
+					let temp = Object.assign([],this.allCitys).map(item => {
+					  return Object.assign({},item)
+					})
+					let data = Object.assign([],this.allCitys).map(item => {
+					  return Object.assign({},item)
 					})
 						console.log(data);
 					let mapseries = mapdata.features.map((item) => {

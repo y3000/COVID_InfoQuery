@@ -28,9 +28,10 @@ export default {
 				legendShape: 'circle',
 				dataLabel: false,
 				xAxis: {
-					// max: 6500,
-					labelCount: 4,
 					disableGrid: true,
+					min:10,
+					labelCount: 4,
+					format:(value)=>{return value.toFixed(0)}
 				},
 				yAxis: {
 					disableGrid: false,
@@ -74,8 +75,6 @@ export default {
 			  categories:this.areas,
 			   series:this.jwsr
           };
-		  // console.log( this.categories);
-		  // console.log( this.jwsr);
         this.chartData = JSON.parse(JSON.stringify(res));
       }, 500);
     },
