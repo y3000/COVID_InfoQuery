@@ -89,14 +89,14 @@
 			getServerData() {
 				setTimeout(() => {
 					// console.log(777);
-					console.log(JSON.parse(JSON.stringify(this.allCitys)));
+					// console.log(JSON.parse(JSON.stringify(this.allCitys)));
 					let temp = Object.assign([],this.allCitys).map(item => {
 					  return Object.assign({},item)
 					})
 					let data = Object.assign([],this.allCitys).map(item => {
 					  return Object.assign({},item)
 					})
-						console.log(data);
+						// console.log(data);
 					let mapseries = mapdata.features.map((item) => {
 						//根据接口数据查找到当前匹配的数据
 						// console.log(data.find((x) => x.name.substring(0,2) == item.properties.name || x.name.substring(0,3) == item.properties.name));

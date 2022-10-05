@@ -374,11 +374,11 @@
 						city.push(temp);
 					}
 					this.allCitys.push({city:city});
-					console.log(this.allCitys);
+					// console.log(this.allCitys);
 				 let data = Object.assign([],this.allCitys).map(item => {
 				   return Object.assign({},item)
 				 })
-				 	console.log(data);
+				 	// console.log(data);
 
 				}
 			}).catch((error) => {
