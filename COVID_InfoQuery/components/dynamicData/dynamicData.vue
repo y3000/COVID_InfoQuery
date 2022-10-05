@@ -159,10 +159,10 @@
 					</view>
 				</view>
 				
-				<view class="select">
-					按国家查看
-				</view>
 				<view class="table">
+					<view class="title out">
+						<span>国外病例</span>
+					</view>
 					<uni-table stripe emptyText="暂无更多数据">
 						<!-- 表头行 -->
 						<uni-tr>
@@ -170,7 +170,7 @@
 							<uni-th align="center" width="80" sortable @sort-change="sort_change_1" class="th" style="color: rgb(247, 76, 49);background-color: rgb(253, 241, 237) ">现存确诊</uni-th>
 							<uni-th align="center" width="80" sortable @sort-change="sort_change_2" class="th"  style="color: rgb(174, 33, 44);background-color: rgb(248, 225, 225)">累计确诊</uni-th>
 							<uni-th align="center" width="80" sortable @sort-change="sort_change_3" class="th" style="color: rgb(40, 183, 163);background-color: rgb(227, 252, 246)">治愈</uni-th>
-							<uni-th align="center" width="80" sortable @sort-change="sort_change_4" class="th" style="color: rgb(93, 112, 146);background-color:rgb(219, 230, 248)">死亡</uni-th>
+							<uni-th align="center" width="70" sortable @sort-change="sort_change_4" class="th" style="color: rgb(93, 112, 146);background-color:rgb(219, 230, 248)">死亡</uni-th>
 						</uni-tr>
 						<!-- 表格数据行 -->
 						<uni-tr v-for="(item,index) in worldData" :key="index" class="table-td">
@@ -178,18 +178,32 @@
 							<uni-td align="center" class="td">{{item.currentConfirmedCount}}</uni-td>
 							<uni-td align="center" class="td">{{item.confirmedCount}}</uni-td>
 							<uni-td align="center" class="td">{{item.curedCount}}</uni-td>
-							<uni-td align="center" class="td">{{item.deadCount}}</uni-td>
+							<uni-td align="left" class="td">{{item.deadCount}}</uni-td>
 						</uni-tr>
-					
 					</uni-table>
 					<view class="all">
 						<uni-load-more iconType="circle" :status="status" :contentText="contentText" @clickLoadMore="clickLoadMore"> </uni-load-more>
 					</view>
 				</view>
+				<!-- 国外top图 -->
+				<view class="topChart">
+					<view class="title">
+						<span>{{virusTypes2[current2].virustype}}</span>
+					</view>
+					<view>
+						<swiper class="ui-virusinfos" @change="swiperChange2" :current="current2">
+							<swiper-item class="ui-virusinfo-item" v-for="(item,index) in topData" :key="index">
+								<jwsrTop :jwsr="item.data" :areas="item.areas"></jwsrTop>
+							</swiper-item>
+						</swiper>
+					</view>
+					<view class="ui-virus-name-list">
+						<view class="ui-virus-name-item" v-for="(item,index) in virusTypes2" :key="index" :class="{active:current2==index}" :data-current="index" @tap="tabChange2">{{item.virustype}}</view>
+					</view>
+					
+				</view>
 				
-			
-			</view>
-			
+			</view>		
 		</view>
 	</view>
 </template>
@@ -236,13 +250,13 @@
 				trend:[],//趋势图数据
 				visible: false,
 				current:0,
-				worldData:[],
-				worldDataAll:[],
+				worldData:[],//表格数据
+				worldDataAll:[],//所有世界疫情数据
 				status: "more"	,
 				contentText: {
 					contentdown: '显示全部',
 					contentrefresh: '加载中',
-					contentnomore: '没有更多'
+					contentnomore: '没有更多,收起'
 				},
 				virusTypes:[{
 				virustype:"全国疫情新增趋势"
@@ -254,6 +268,17 @@
 				jwsr:[],//境外输入
 				areas:[],//境外地区
 				
+				worldTop:[],//世界TOP
+				worldTopArea:[],//世界TOP地区,
+				topData:[],//国外top数据
+				virusTypes2:[{
+				virustype:"国外累计确诊TOP10"
+				},{
+					virustype:"国外新增死亡TOP10"
+				},{
+					virustype:"国外治愈TOP10"
+				}],
+				current2:0,
 			};
 		},
 		components: {
@@ -372,18 +397,17 @@
 					key: "5dc22657a9bfb4b84957333fb7779e2e"
 				}
 			}).then((res)=>{
-				console.log("table",res[1]);
 				res = res[1].data;
 				if(res.code===200){
 					this.worldDataAll = res.newslist;
-					this.worldData = this.worldDataAll.slice(0,20)
+					this.worldData = this.worldDataAll.slice(0,10)
 					}
 				})
 			// 境外输入前十
 			uni.request({
-				url:"https://interface.sina.cn/news/wap/fymap2020_data.d.json",
+				url:"/jwsr",
 			}).then((res)=>{
-				console.log(res[1]);
+				// console.log(res[1]);
 				if (res[1].statusCode === 200) {
 					let jwsrTop = res[1].data.data.jwsrTop;
 					let data = [];
@@ -392,8 +416,40 @@
 						this.areas.push(jwsrTop[i].name);
 					}
 					this.jwsr.push({name:"境外输入",data: data});
+					
+					let worldList = res[1].data.data.worldlist.slice(1);
+					let conNumTop = worldList.sort(function(a,b){
+						return b.conNum - a.conNum;
+					}).slice(0,10);
+					
+					let deathNum = worldList.sort(function(a,b){
+						return b.deathadd - a.deathadd;
+					}).slice(0,10);
+					
+					let cureNum = worldList.sort(function(a,b){
+						return b.cureNum - a.cureNum;
+					}).slice(0,10);
+					let worldArea1=[],top1 = [],worldArea2=[],top2 = [],worldArea3=[],top3 = [];
+					for(let i=0;i<10;i++){
+						worldArea1.push(conNumTop[i].name);
+						top1.push(conNumTop[i].conNum);
+						worldArea2.push(deathNum[i].name);
+						top2.push(deathNum[i].deathadd);
+						worldArea3.push(cureNum[i].name);
+						top3.push(cureNum[i].cureNum);
+					}
+					let temp = [];
+					temp.push({name:"累计确诊",data:top1});
+					this.topData.push({areas:worldArea1,data:temp});
+					temp = [];
+					temp.push({name:"累计死亡",data:top2});
+					this.topData.push({areas:worldArea2,data:temp});
+					temp = [];
+					temp.push({name:"累计治愈",data:top3});
+					this.topData.push({areas:worldArea3,data:temp});
 				}
 			})
+			
 			
 		},
 		methods:{
@@ -491,10 +547,15 @@
 				}
 			},
 			clickLoadMore(e){
+				console.log(e);
 				let status = e.detail.status;
-				if(status = 'more') {
-					this.status = '';
+				if(status == 'more') {
+					this.status = 'noMore';
 					this.worldData = this.worldDataAll;
+				}else{
+					this.status = 'more';
+					console.log("more");
+					this.worldData = this.worldDataAll.slice(0,10);
 				}
 				
 			},
@@ -507,7 +568,15 @@
 			swiperChange:function(e) {			
 				var index=e.target.current || e.detail.current;
 				this.current = index;
-			}
+			},
+			tabChange2:function(e){
+					var index = e.target.dataset.current || e.currentTarget.dataset.current;
+					this.current2=index;
+				},
+			swiperChange2:function(e) {			
+				var index=e.target.current || e.detail.current;
+				this.current2 = index;
+			},
 			
 			
 		}
@@ -665,7 +734,12 @@
 		font-size: 28rpx;
 	}
 	.table{
-		padding: 10rpx;
+		padding: 5rpx 10rpx;
+		border: 1px solid #f3f3f3;
+		box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+	}
+	.table-title{
+		height: 80rpx;
 	}
 	.table-td .td{
 		font-size: 24rpx;

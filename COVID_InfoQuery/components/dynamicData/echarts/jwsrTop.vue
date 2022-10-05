@@ -28,7 +28,10 @@ export default {
 				'legendShape': 'circle',
 				dataLabel: false,
 				xAxis: {
-					max: 6500,
+					min:10,
+					labelCount: 4,
+					format:(value)=>{return value.toFixed(0)}
+
 				},
 				yAxis: {
 					// "disableGrid": false,
