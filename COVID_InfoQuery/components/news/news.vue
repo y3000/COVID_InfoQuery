@@ -8,12 +8,17 @@
 		<view class="news-item" v-for="(item,index) in newsList" :key="item.id" @click="toDetail(item.sourceUrl)">
 			<view class="tag">
 				{{item.pubDateStr}}
-				<!-- 最新的 -->
 			</view>
 			<view class="news-title">
 				{{item.title}}
 			</view>
-			<img src="../../static/icon/more.png" alt="">
+			<view class="summary">
+				{{item.summary}}
+			</view>
+			<view class="sorce">
+				{{item.infoSource}}
+			</view>
+			<!-- <img src="../../static/icon/more.png" alt=""> -->
 		</view>
 	</view>
 </template>
@@ -68,11 +73,13 @@
 	}
 	.news-item{
 		position: relative;
-		height: 100rpx;
+		height: 200rpx;
 		line-height: 100rpx;
 		/* width: 100%; */
 		background-color: #fff;
 		padding: 0 20rpx;
+		margin-bottom: 10rpx;
+		border-bottom: 1px solid #e0e0e0;
 	}
 	.tag{
 		display: inline-block;
@@ -88,7 +95,7 @@
 	}
 	.news-title{
 		display: inline-block;
-		width: 80%;
+		width: 75%;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
@@ -101,7 +108,22 @@
 	.news-item img{
 		position: absolute;
 		right: 30rpx;
-		top: 40rpx;
+		top: 80rpx;
+	}
+	.sorce{
+		float: right;
+		height: 80rpx;
+		font-size: 24rpx;
+		color: #afafaf;
+	}
+	.summary{
+		display: inline-block;
+		font-size: 26rpx;
+		width: 70%;
+		color: #787878;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 	/*#007aff  */
 </style>
