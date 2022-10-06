@@ -111,6 +111,7 @@
 <script>
 	import citys from "./../../utils/data/cityId.js"
 	import axios from "axios"
+	import {getPolicyQuery} from '@/utils/request.js'
 	export default {
 		name:"policyQuery",
 		mounted(){
@@ -220,13 +221,20 @@
 				});
 				uni.request({
 				  method: 'get',
-				  url: '/api/springTravel/query',
+				  // #ifdef H5
+				  url: '/api/springTravel/query',//H5下
+				  // #endif
+				  // #ifndef H5
+				  url: 'http://apis.juhe.cn/springTravel/query',// 非H5下，即APP和微信小程序下
+				  // #endif
+			
 				  data: {
 				    key: '2ccaea817d00de15c4dbfdb3b9d2d302',
 				    from: idFrom,
 					to:idTo
 				  }
 				}).then(msg=>{
+					console.log(msg);
 					this.res = msg[1].data.result
 					console.log(this.res)
 					uni.hideLoading()
@@ -280,7 +288,7 @@
 		white-space: nowrap;
 		left: 120rpx;	
 		color:#f04142;
-		font-size: 10rpx;
+		font-size: 24rpx;
 	}
 	.scroll-content>p:nth-child(1) {margin-right: 80rpx;}
 	@-webkit-keyframes noticeScroll{0%{-webkit-transform:translate(0%);transform:translate(0%)}to{-webkit-transform:translate(-100%);transform:translate(-100%)}}@keyframes noticeScroll{0%{-webkit-transform:translate(0%);transform:translate(0%)}to{-webkit-transform:translate(-100%);transform:translate(-100%)}}

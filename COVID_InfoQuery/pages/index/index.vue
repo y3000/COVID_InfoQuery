@@ -20,14 +20,13 @@
 		<view class="news">
 			<news :newsList = "newsList"></news>
 		</view>
-			
 	</view>
 </template>
 
 <script>
-	import {dynamicData} from '@/components/dynamicData/dynamicData.vue'
-	import {policyQuery} from '@/components/policyQuery/policyQuery.vue'
-	import {news} from '@/components/news/news.vue'
+	// import {dynamicData} from '@/wxcomponents/dynamicData/dynamicData.vue'
+	// import {policyQuery} from '@/wxcomponents/policyQuery/policyQuery.vue'
+	// import {news} from '@/wxcomponents/news/news.vue'
 	import {getnewsList} from '@/utils/request.js'
 	export default {
 		data() {
@@ -70,12 +69,10 @@
 	}
 </script>
 
-<style>
+<style scoped>
 	.content {
 		display: flex;
 		flex-direction: column;
-		/* align-items: center; */
-		/* justify-content: space-around; */
 		max-width: 1400rpx;
 		margin: 0 auto;
 	}
@@ -103,4 +100,5 @@
 		margin-top: 40rpx;
 		width: 100%;
 	}
+	
 </style>

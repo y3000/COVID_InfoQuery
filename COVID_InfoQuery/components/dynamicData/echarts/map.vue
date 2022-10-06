@@ -153,6 +153,6 @@
 
 	.charts-box {
 		width: 100%;
-		height: 360px;
+		margin-left: 20px;
 	}
 </style>

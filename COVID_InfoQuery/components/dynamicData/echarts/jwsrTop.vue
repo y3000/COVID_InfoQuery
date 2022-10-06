@@ -30,12 +30,12 @@ export default {
 				xAxis: {
 					disableGrid: true,
 					min:10,
-					labelCount: 4,
-					format:(value)=>{return value.toFixed(0)}
+					format:"xAxisDemo1"
 				},
 				yAxis: {
 					disableGrid: false,
 					// "showTitle": false,
+					
 				},
 				extra: {
 					bar: {
