@@ -253,9 +253,11 @@
 	.policy{
 		height: 100vh;
 		background-color: #fff;
+		max-width: 750px;
+		margin: auto;
 	}
 	.policy image{
-		width: 100vw;
+		width: 100%;
 	}
 	.scrollMessage{
 		width: 94%;
