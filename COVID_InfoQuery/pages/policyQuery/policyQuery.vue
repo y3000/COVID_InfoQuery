@@ -14,10 +14,10 @@
 			<view class="uni-list ">
 				<view class="uni-list-cell">
 					<view class="uni-list-cell-db">
-						<picker mode='multiSelector' @columnchange='columnChangeFrom' @change="bindPickerChangeFrom"  :range="cityListFrom" range-key="text">
+						<picker mode='multiSelector' @columnchange='columnChangeFrom' @change="bindPickerChangeFrom"  :range="cityListFrom" range-key="name">
 							<view class="uni-input from" @click="tapFrom">
 								<text>出发地</text>
-								<view>{{showCityFrom}}</view>
+								<view>{{showCityFrom.name}}</view>
 							</view>
 						</picker>
 					</view>
@@ -27,10 +27,10 @@
 			<view class="uni-list">
 				<view class="uni-list-cell">
 					<view class="uni-list-cell-db">
-						<picker mode='multiSelector' @columnchange='columnChangeTo' @change="bindPickerChangeTo"  :range="cityListTo" range-key="text">
+						<picker mode='multiSelector' @columnchange='columnChangeTo' @change="bindPickerChangeTo"  :range="cityListTo" range-key="name">
 							<view class="uni-input from" @click="tapTo">
 								<text>到达地</text>
-								<view>{{showCityTo}}</view>
+								<view>{{showCityTo.name}}</view>
 							</view>
 						</picker>
 					</view>
@@ -120,14 +120,15 @@
 			this.cityListFrom = [[],[]]
 			this.cityListTo = [[],[]]
 			citys.forEach(item=>{
-				this.cityListFrom[0].push(item.text)
-				this.cityListTo[0].push(item.text)
+				this.cityListFrom[0].push({name:item.text})
+				this.cityListTo[0].push({name:item.text})
 			})
 			//初始化第二列数据
 			citys[0].children.forEach(item=>{
-				this.cityListFrom[1].push(item.text)
-				this.cityListTo[1].push(item.text)
+				this.cityListFrom[1].push({name:item.text})
+				this.cityListTo[1].push({name:item.text})
 			})
+			console.log("城市数据",this.cityListFrom,this.cityListTo)
 		},
 		data() {
 			return {
@@ -177,7 +178,7 @@
 					//第一个数据改变，第二个数组全部修改，并初始化指向了第一个
 					this.cityListFrom[1] = []
 					citys[e.detail.value].children.forEach(item=>{
-						this.cityListFrom[1].push(item.text)
+						this.cityListFrom[1].push({name:item.text})
 					})
 					this.index2 = 0
 					
@@ -195,7 +196,7 @@
 					//第一个数据改变，第二个数组全部修改，并初始化指向了第一个
 					this.cityListTo[1] = []
 					citys[e.detail.value].children.forEach(item=>{
-						this.cityListTo[1].push(item.text)
+						this.cityListTo[1].push({name:item.text})
 					})
 					if(this.cityListTo[1].length===1) this.index4 = 0
 					
@@ -207,7 +208,7 @@
 				let idFrom,idTo
 				idFrom = citys[this.index1].children[this.index2].value
 				idTo = citys[this.index3].children[this.index4].value
-				console.log(this.showCityFrom,this.showCityTo)
+			
 				if(this.showCityFrom==='请选择出发地' || this.showCityTo==="请选择目的地") {
 					uni.showToast({
 						title: '请选择城市',
