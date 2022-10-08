@@ -1,10 +1,37 @@
 # COVID_InfoQuery
+
 项目介绍：各地疫情实时数据和出行政策查询系统
 ## 环境准备
-...
+
+**一、克隆项目**
+
+```
+git clone https://github.com/y3000/COVID_InfoQuery.git
+```
+
+**二、导入uniapp项目**
+
+```
+1. （如果没有HBuilderX）首先下载HBuilderX并安装，地址：https://www.dcloud.io/hbuilderx.html
+2. 打开HBuilderX -> 顶部菜单栏 -> 文件 -> 导入 -> 从本地目录导入 -> 选择uniapp端项目目录
+3. 打开manifest.json文件，选择微信小程序配置，填写小程序的appid
+```
+
+**三、本地调试**
+
+```
+1. 打开HBuilderX -> 顶部菜单栏 -> 运行 -> 运行到浏览器 -> Chrome
+2. 编译过程中，根据提示安装必要的插件，安装完成后重新编译运行
+```
+
+
+
+
 
 ## 提交规范参考
-## How to contribute
+
+### How to contribute
+
 \*(代码贡献参考)
 
 You are very welcome to join！[Raise an issue](https://github.com/anncwb/vue-vben-admin/issues/new/choose) Or submit a Pull Request。
@@ -17,7 +44,8 @@ You are very welcome to join！[Raise an issue](https://github.com/anncwb/vue-vb
 4. Push your branch: `git push origin feat/xxxx`
 5. submit`pull request`
 
-## Git Contribution submission specification
+### Git Contribution submission specification
+
 \*(代码提交信息规范)
 
 - reference [vue](https://github.com/vuejs/vue/blob/dev/.github/COMMIT_CONVENTION.md) specification ([Angular](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-angular))
@@ -34,3 +62,8 @@ You are very welcome to join！[Raise an issue](https://github.com/anncwb/vue-vb
   - `ci` Continuous integration 持续集成修改
   - `types` Type definition file changes
   - `wip` In developmen
+
+
+
+## 团队成员
+
