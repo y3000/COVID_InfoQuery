@@ -31,7 +31,7 @@
 	export default {
 		data() {
 			return {
-				iconText: ["核酸机构", "防疫知识库", "同程查询", "核酸物联网"],
+				iconText: ["核酸机构", "防疫知识库", "疫情传播链", "核酸物联网"],
 				iconList: ["../../static/icon/heSuan.png",
 				"../../static/icon/faq.png",
 				"../../static/icon/trip.png",
