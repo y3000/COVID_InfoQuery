@@ -1,7 +1,10 @@
 <template>
 	<view id="parent">
-		<l-echart ref="chart" @finished="init"></l-echart>
+		<view id="pathChart">
+			<l-echart ref="chart" @finished="init"></l-echart>
+		</view>
 	</view>
+	
 </template>
 
 <script>
@@ -43,14 +46,12 @@
 							},
 							{
 								"name": "海归人员"
-							},
-							{
-								"name": "正常人员"
 							}
 						].map(function(a) {
 							return a.name;
 						})
 					}],
+					
 					series: [{
 						name: 'Les Miserables',
 						type: 'graph',
@@ -73,9 +74,6 @@
 							},
 							{
 								"name": "海归人员"
-							},
-							{
-								"name": "正常人员"
 							}
 						],
 						roam: true,
@@ -89,9 +87,13 @@
 							fontSize: 20
 						},
 						force: {
-							repulsion: 1000
+							repulsion: 1500,
+							gravity: 0.03,
+							edgeLength: 80,
+							layoutAnimation : false
 						},
 						focusNodeAdjacency: true,
+						legendHoverLink : true,
 						roam: true,
 						lineStyle: {
 							normal: {
@@ -125,8 +127,13 @@
 </script>
 <style scoped>
 	#parent {
+		display: flex;
+		justify-content: center;
+	}
+	#pathChart{
 		width: 100%;
-		height: 100%;
+		height: 90vh;
+		/* border: 3px black solid; */
 	}
 
 </style>
