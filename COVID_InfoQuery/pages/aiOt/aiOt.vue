@@ -77,6 +77,7 @@
 				username: '',
 				password: '',
 				messages: deviceJson,
+				messages2: deviceJson,
 				messageSearchQuery: "",
 				cameraShow: false,
 				dev_id: "",
@@ -178,15 +179,15 @@
 				this.content[e.index].active = !e.item.active
 				if (e.index == 0) {
 					console.log('gps');
-					this.messages = this.messages.filter((item) => item.datachannel === "空闲状态");
+					this.messages = this.messages2.filter((item) => item.datachannel === "空闲状态");
 					this.flag = 1
 				} else if (e.index == 1) {
 					console.log('switch');
-					this.messages = this.messages.filter((item) => item.datachannel === "拥挤状态");
+					this.messages = this.messages2.filter((item) => item.datachannel === "拥挤状态");
 					this.flag = 2
 				} else if (e.index == 2) {
 					console.log('text');
-					this.messages = this.messages.filter((item) => item.datachannel === "爆满状态");
+					this.messages = this.messages2.filter((item) => item.datachannel === "爆满状态");
 					this.flag = 3
 				} 
 			},
