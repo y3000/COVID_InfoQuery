@@ -4,7 +4,16 @@ module.exports = {
 			'/api':{
 				target:'http://apis.juhe.cn',
 				changeOrigin: true,
-				pathRewrite: { '^/api': '' }
+				pathRewrite: { '^/api': '' },
+				onProxyReq:function(e,req,res){
+					console.log("源路径",req.originalUrl)
+					console.log("代理路径",req.path)
+				}
+			},
+			'/map':{
+				target:'https://vkceyugu.cdn.bspapp.com',
+				changeOrigin: true,
+				pathRewrite: { '^/map': '' }
 			},
 			'/g2/getOnsInfo':{
 				target:'https://view.inews.qq.com/g2/getOnsInfo',

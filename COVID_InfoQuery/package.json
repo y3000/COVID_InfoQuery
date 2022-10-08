@@ -29,6 +29,7 @@
     "axios": "^0.27.2",
     "echarts": "^5.4.0",
     "mpvue-echarts": "^0.3.2",
-    "vant": "^3.6.3"
+    "vant": "^3.6.3",
+    "vue-jsonp": "^2.0.0"
   }
 }

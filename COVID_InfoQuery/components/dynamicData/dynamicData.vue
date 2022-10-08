@@ -313,7 +313,7 @@
 		},
 		mounted() {
 			uni.request({
-				url: "http://api.tianapi.com/ncov/index",
+				url: "https://api.tianapi.com/ncov/index",
 				data: {
 					key: "9a064807767ddfbdaa5d343e223e983a"
 				},
@@ -353,14 +353,17 @@
 			}).catch((error) => {
 				console.log(error);
 			})
-
+			
+			
+			
 			uni.request({
-				url: "http://route.showapi.com/2217-2",
+				url: "https://route.showapi.com/2217-2",
 				data: {
 					showapi_appid: 1184469,
 					showapi_sign: "31fab5eed9884f5ba6c9504c370033f9"
 				},
 			}).then((res) => {
+				console.log(res)
 				// console.log(res[1]);
 				if (res[1].statusCode === 200) {
 					let todayDetailList = res[1].data.showapi_res_body.todayDetailList;
@@ -385,77 +388,72 @@
 				console.log(error);
 			})
 			// 趋势图
-			uni.request({
-				// #ifdef H5
-				url: '/g2/getOnsInfo',//H5下
-				// #endif
-				// #ifndef H5
-				url: 'https://view.inews.qq.com/g2/getOnsInfo',// 非H5下，即APP和微信小程序下
-				// #endif
-				data: {
-					name: "disease_other"
+			var that = this
+			var data={
+				name: "disease_other"
+			}
+			let url = "https://view.inews.qq.com/g2/getOnsInfo";
+			this.$jsonp(url, data) //jsonp请求
+			.then(res => {
+				console.log(res)
+				var data = JSON.parse(res.data);
+				let chinaDayAddList = data.chinaDayAddList;
+				let chinaDayList = data.chinaDayList;
+				let series = [];
+				let confirm = [],
+					dead = [],
+					deadRate = [],
+					heal = [],
+					healRate = [],
+					importedCase = [];
+				for (let i = 0; i < chinaDayAddList.length; i++) {
+					this.categories.push(chinaDayAddList[i].date); //趋势图日期
+					confirm.push(chinaDayAddList[i].confirm); //新增
+					importedCase.push(chinaDayAddList[i].importedCase); //新增境外
 				}
-			}).then((res) => {
-				console.log(res);
-				var data = JSON.parse(res[1].data.data);
-				
-				// console.log(data);
-				if (res[1].statusCode === 200) {
-					let chinaDayAddList = data.chinaDayAddList;
-					let chinaDayList = data.chinaDayList;
-					let series = [];
-					let confirm = [],
-						dead = [],
-						deadRate = [],
-						heal = [],
-						healRate = [],
-						importedCase = [];
-					for (let i = 0; i < chinaDayAddList.length; i++) {
-						this.categories.push(chinaDayAddList[i].date); //趋势图日期
-						confirm.push(chinaDayAddList[i].confirm); //新增
-						importedCase.push(chinaDayAddList[i].importedCase); //新增境外
-					}
-					series.push({
-						name: "新增确诊",
-						data: confirm
-					})
-					series.push({
-						name: "新增境外",
-						data: importedCase
-					})
-					this.trend.push(series);
-					for (let i = 0; i < chinaDayList.length; i++) {
-						dead.push(chinaDayList[i].dead); //死亡
-						deadRate.push(chinaDayList[i].deadRate); //死亡率
-						heal.push(chinaDayList[i].heal); //治愈
-						healRate.push(chinaDayList[i].healRate); //治愈率
-					}
-					series = [];
-					series.push({
-						name: "死亡",
-						data: dead
-					})
-					series.push({
-						name: "治愈",
-						data: heal
-					})
-					this.trend.push(series);
-					series = [];
-					series.push({
-						name: "死亡率",
-						data: deadRate
-					})
-					series.push({
-						name: "治愈率",
-						data: healRate
-					})
-					this.trend.push(series);
-					// console.log(this.trend);
+				series.push({
+					name: "新增确诊",
+					data: confirm
+				})
+				series.push({
+					name: "新增境外",
+					data: importedCase
+				})
+				this.trend.push(series);
+				for (let i = 0; i < chinaDayList.length; i++) {
+					dead.push(chinaDayList[i].dead); //死亡
+					deadRate.push(chinaDayList[i].deadRate); //死亡率
+					heal.push(chinaDayList[i].heal); //治愈
+					healRate.push(chinaDayList[i].healRate); //治愈率
 				}
-				// dataResult = JSON.parse(data);
+				series = [];
+				series.push({
+					name: "死亡",
+					data: dead
+				})
+				series.push({
+					name: "治愈",
+					data: heal
+				})
+				this.trend.push(series);
+				series = [];
+				series.push({
+					name: "死亡率",
+					data: deadRate
+				})
+				series.push({
+					name: "治愈率",
+					data: healRate
+				})
+				this.trend.push(series);
 			})
+			.catch(error => {
+				console.log(error)
+			})
+			
+			
 			uni.request({
-				url: "http://api.tianapi.com/ncovabroad/index",
+				url: "https://api.tianapi.com/ncovabroad/index",
 				data: {
 					key: "5dc22657a9bfb4b84957333fb7779e2e"
 				}
@@ -466,91 +464,84 @@
 					this.worldData = this.worldDataAll.slice(0, 10)
 				}
 			})
-			// 境外输入前十
-			uni.request({
-				// #ifdef H5
-				url: '/jwsr',//H5下
-				// #endif
-				// #ifndef H5
-				url: 'https://interface.sina.cn/news/wap/fymap2020_data.d.json',// 非H5下，即APP和微信小程序下
-				// #endif
-			}).then((res) => {
-				// console.log(res[1]);
-				if (res[1].statusCode === 200) {
-					let jwsrTop = res[1].data.data.jwsrTop;
-					let data = [];
-					let areas= []; //境外地区
-					for (let i = 0; i < jwsrTop.length; i++) {
-						data.push(jwsrTop[i].jwsrNum);
-						areas.push(jwsrTop[i].name);
-					}
-					let jwsr = [];
-					jwsr.push({
-						name: "境外输入",
-						data: data
-					});
-					this.jwsrList.push({
-						areas: areas,
-						data: jwsr,
-					})
-
-					let worldList = res[1].data.data.worldlist.slice(1);
-					let conNumTop = worldList.sort(function(a, b) {
-						return b.conNum - a.conNum;
-					}).slice(0, 10);
-
-					let deathNum = worldList.sort(function(a, b) {
-						return b.deathadd - a.deathadd;
-					}).slice(0, 10);
-
-					let cureNum = worldList.sort(function(a, b) {
-						return b.cureNum - a.cureNum;
-					}).slice(0, 10);
-					let worldArea1 = [],
-						top1 = [],
-						worldArea2 = [],
-						top2 = [],
-						worldArea3 = [],
-						top3 = [];
-					for (let i = 0; i < 10; i++) {
-						worldArea1.push(conNumTop[i].name);
-						top1.push(conNumTop[i].conNum);
-						worldArea2.push(deathNum[i].name);
-						top2.push(deathNum[i].deathadd);
-						worldArea3.push(cureNum[i].name);
-						top3.push(cureNum[i].cureNum);
-					}
-					let temp = [];
-					temp.push({
-						name: "累计确诊",
-						data: top1
-					});
-					this.topData.push({
-						areas: worldArea1,
-						data: temp
-					});
-					temp = [];
-					temp.push({
-						name: "累计死亡",
-						data: top2
-					});
-					this.topData.push({
-						areas: worldArea2,
-						data: temp
-					});
-					temp = [];
-					temp.push({
-						name: "累计治愈",
-						data: top3
-					});
-					this.topData.push({
-						areas: worldArea3,
-						data: temp
-					});
+			
+			var that = this
+			var data={
+				
+			}
+			let url2 = "https://interface.sina.cn/news/wap/fymap2020_data.d.json";
+			this.$jsonp(url2, data).then(msg=>{
+				let jwsrTop = msg.data.jwsrTop;
+				let data = [];
+				let areas= []; //境外地区
+				for (let i = 0; i < jwsrTop.length; i++) {
+					data.push(jwsrTop[i].jwsrNum);
+					areas.push(jwsrTop[i].name);
 				}
+				let jwsr = [];
+				jwsr.push({
+					name: "境外输入",
+					data: data
+				});
+				this.jwsrList.push({
+					areas: areas,
+					data: jwsr,
+				})
+				
+				let worldList = msg.data.worldlist.slice(1);
+				let conNumTop = worldList.sort(function(a, b) {
+					return b.conNum - a.conNum;
+				}).slice(0, 10);
+				
+				let deathNum = worldList.sort(function(a, b) {
+					return b.deathadd - a.deathadd;
+				}).slice(0, 10);
+				
+				let cureNum = worldList.sort(function(a, b) {
+					return b.cureNum - a.cureNum;
+				}).slice(0, 10);
+				let worldArea1 = [],
+					top1 = [],
+					worldArea2 = [],
+					top2 = [],
+					worldArea3 = [],
+					top3 = [];
+				for (let i = 0; i < 10; i++) {
+					worldArea1.push(conNumTop[i].name);
+					top1.push(conNumTop[i].conNum);
+					worldArea2.push(deathNum[i].name);
+					top2.push(deathNum[i].deathadd);
+					worldArea3.push(cureNum[i].name);
+					top3.push(cureNum[i].cureNum);
+				}
+				let temp = [];
+				temp.push({
+					name: "累计确诊",
+					data: top1
+				});
+				this.topData.push({
+					areas: worldArea1,
+					data: temp
+				});
+				temp = [];
+				temp.push({
+					name: "累计死亡",
+					data: top2
+				});
+				this.topData.push({
+					areas: worldArea2,
+					data: temp
+				});
+				temp = [];
+				temp.push({
+					name: "累计治愈",
+					data: top3
+				});
+				this.topData.push({
+					areas: worldArea3,
+					data: temp
+				});
 			})
-
-
 		},
 		methods: {
 			// 国内外tab

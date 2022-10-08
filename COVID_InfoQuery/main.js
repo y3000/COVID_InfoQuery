@@ -5,9 +5,10 @@ import * as request from './utils/request'
 import Vue from 'vue'
 
 // import './mock/mockServer.js'
-
+import {VueJsonp} from 'vue-jsonp'
 Vue.config.productionTip = false
 Vue.prototype.$request = request;
+Vue.use(VueJsonp)
 App.mpType = 'app'
 const app = new Vue({
     ...App

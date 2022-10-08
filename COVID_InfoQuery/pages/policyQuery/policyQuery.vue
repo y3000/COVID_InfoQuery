@@ -220,26 +220,21 @@
 				uni.showLoading({
 					title: '努力加载中...'
 				});
-				uni.request({
-				  method: 'get',
-				  // #ifdef H5
-				  url: '/api/springTravel/query',//H5下
-				  // #endif
-				  // #ifndef H5
-				  url: 'http://apis.juhe.cn/springTravel/query',// 非H5下，即APP和微信小程序下
-				  // #endif
-			
-				  data: {
-				    key: '2ccaea817d00de15c4dbfdb3b9d2d302',
-				    from: idFrom,
+				var that = this
+				var data={
+					key: '2ccaea817d00de15c4dbfdb3b9d2d302',
+					from: idFrom,
 					to:idTo
-				  }
-				}).then(msg=>{
-					console.log(msg);
-					this.res = msg[1].data.result
-					console.log(this.res)
+				}
+				let url = "https://apis.juhe.cn/springTravel/query";
+				this.$jsonp(url, data) //jsonp请求
+				.then(res => {
 					uni.hideLoading()
-				});
+					this.res = res.result
+				})
+				.catch(error => {
+					uni.hideLoading()
+				})
 			},
 			tapFrom:function(e){
 				this.showCityFrom = this.cityListFrom[1][0]
