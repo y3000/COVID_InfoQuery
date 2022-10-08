@@ -31,10 +31,11 @@
 	export default {
 		data() {
 			return {
-				iconText: ["核酸机构", "防疫知识库", "同程查询"],
+				iconText: ["核酸机构", "防疫知识库", "疫情传播链", "核酸物联网"],
 				iconList: ["../../static/icon/heSuan.png",
 				"../../static/icon/faq.png",
 				"../../static/icon/trip.png",
+				"../../static/icon/status.png"
 				],
 				newsList:[],//新闻数据
 			}
@@ -62,6 +63,11 @@
 				else if(id===2){
 					uni.navigateTo({
 						url: "/pages/tripQuery/tripQuery",
+					});
+				}
+				else if(id === 3){
+					uni.navigateTo({
+						url: "/pages/aiOt/aiOt",
 					});
 				}
 			},

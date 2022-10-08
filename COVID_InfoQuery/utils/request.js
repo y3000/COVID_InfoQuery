@@ -86,7 +86,38 @@ const showError = error =>{
 	})
 }
 
+const BASE_URL = "https://www.yingcloud.com:8000"
+
+export const myRequest = (options) => {
+	const header_tmp = {
+		"Authorization" : "Bearer" + " " + uni.getStorageInfoSync("Access_token") || ""
+	};
+	return new Promise((resolve, reject) => {
+		uni.request({
+			url: BASE_URL + options.url,
+			method: options.method || "GET",
+			data: options.data || {},
+			header: header_tmp,
+			success: (res) => {
+				if(res.statusCode !== 200 && res.statusCode !== 201){
+					return uni.showToast({
+						title: "请求失败！"
+					})
+				};
+				resolve(res)
+			},
+			fail: (err) => {
+				return uni.showToast({
+					title: "请求接口失败"
+				})
+				reject(err)
+			},
+		})
+	})
+}
+
 export const getnewsList = (callback) => get('https://api.tianapi.com//ncov/index?key='+ key, callback)
+
 export const getTripQuery = (callback) => get("/mock/tripQuery", callback)
 export const getPolicyQuery = (key,from,to,callback) => get("/api/springTravel/query?key="+ key+ "&from="+from+"&to="+to, callback)
 
