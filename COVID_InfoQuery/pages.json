@@ -21,7 +21,7 @@
 		{
 			"path": "pages/tripQuery/tripQuery",
 			"style": {
-				"navigationBarTitleText": "肺炎同程查询"
+				"navigationBarTitleText": "疫情同程传播链"
 			}
 		},
 		{

@@ -22,8 +22,8 @@
 			return {
 				option: {
 					title: {
-						text: '疫情同程链',
-						subtext: '传播链查询',
+						text: '疫情传播链',
+						subtext: '疫情传播链',
 						top: 'bottom',
 						left: 'left'
 					},
