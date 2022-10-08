@@ -41,16 +41,16 @@
 		},
 		methods:{
 			toDetail(sourceUrl){
-				console.log(sourceUrl);
+				// console.log(sourceUrl);
 				uni.navigateTo({
-					url:"/pages/newsInfo/newsInfo?sourceUrl="+sourceUrl,
+					url:"/pages/newsInfo/newsInfo?sourceUrl="+encodeURIComponent(JSON.stringify(sourceUrl)),
 				})
 			}
 		}
 	}
 </script>
 
-<style>
+<style scoped>
 	.content{
 		height: auto;
 	}

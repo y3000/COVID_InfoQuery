@@ -386,13 +386,19 @@
 			})
 			// 趋势图
 			uni.request({
-				url: "/g2/getOnsInfo",
+				// #ifdef H5
+				url: '/g2/getOnsInfo',//H5下
+				// #endif
+				// #ifndef H5
+				url: 'https://view.inews.qq.com/g2/getOnsInfo',// 非H5下，即APP和微信小程序下
+				// #endif
 				data: {
 					name: "disease_other"
 				}
 			}).then((res) => {
-				// console.log(res[1]);
-				var data = eval('(' + res[1].data.data + ')');
+				console.log(res);
+				var data = JSON.parse(res[1].data.data);
+				
 				// console.log(data);
 				if (res[1].statusCode === 200) {
 					let chinaDayAddList = data.chinaDayAddList;
@@ -462,7 +468,12 @@
 			})
 			// 境外输入前十
 			uni.request({
-				url: "/jwsr",
+				// #ifdef H5
+				url: '/jwsr',//H5下
+				// #endif
+				// #ifndef H5
+				url: 'https://interface.sina.cn/news/wap/fymap2020_data.d.json',// 非H5下，即APP和微信小程序下
+				// #endif
 			}).then((res) => {
 				// console.log(res[1]);
 				if (res[1].statusCode === 200) {
@@ -554,13 +565,15 @@
 			pageScroll(dom) {
 				// 先获取目标dom的实例信息
 				// data即为实例信息, data.top, data.left, data.right, data.bottom即为dom的对应坐标
-				uni.createSelectorQuery().select(dom).boundingClientRect(data => {
+				setTimeout(()=>{
+				uni.createSelectorQuery().in(this).select(dom).boundingClientRect(data => {
 					// 调用页面滚动的api
 					uni.pageScrollTo({
 						duration: 300, // 滚动动画过渡时间
 						scrollTop: data.top, // 滚动的值
 					})
 				}).exec();
+				},100)
 			},
 			formatData(time) {
 				var date = new Date(time);
@@ -672,7 +685,7 @@
 	}
 </script>
 
-<style>
+<style scoped>
 	.all-container {
 		background-color: #fff;
 		border-radius: 20rpx;
@@ -779,6 +792,10 @@
 	.domestic .map {
 		position: relative;
 		text-align: center;
+		display: block;
+		margin: 0 auto;
+		text-align: center;
+		height: 400px;
 		background: #fff;
 		border: 1px solid #ebebeb;
 		border-radius: 5px;
