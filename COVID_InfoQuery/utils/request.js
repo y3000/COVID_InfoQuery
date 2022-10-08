@@ -86,7 +86,7 @@ const showError = error =>{
 	})
 }
 
-export const getnewsList = (callback) => get('http://api.tianapi.com//ncov/index?key='+ key, callback)
+export const getnewsList = (callback) => get('https://api.tianapi.com//ncov/index?key='+ key, callback)
 export const getTripQuery = (callback) => get("/mock/tripQuery", callback)
 export const getPolicyQuery = (key,from,to,callback) => get("/api/springTravel/query?key="+ key+ "&from="+from+"&to="+to, callback)
 

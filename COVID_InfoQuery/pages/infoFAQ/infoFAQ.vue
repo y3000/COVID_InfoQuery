@@ -9,7 +9,7 @@
 		<scroll-view class="scroll" scroll-y="true" :scroll-into-view="id" scroll-with-animation @scroll="scroll($event)">
 			<view v-for="(item, index) in data" :id="item.id" :key="index" class="text">
 				<view class="image" v-if="item.id === 'a'">
-					<image style="width: 100%;border-radius: 10rpx;" src="../../static/images/R-C.png" mode="aspectFill"></image>
+					<image style="width: 100%;border-radius: 10rpx;" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-acb7ba46-bcc3-4d15-b4a2-0fa52cccd59a/74bc0eaa-b6b1-4f8d-b6f2-ecb75e720d89.png" mode="aspectFill"></image>
 				</view>
 				<view class="section" v-for="(article, index) in item.article" :key="index">
 					<view class="h2">{{article.title}}</view>
