@@ -1,6 +1,9 @@
 # COVID_InfoQuery
 
-项目介绍：各地疫情实时数据和出行政策查询系统
+**项目介绍：**疫情信息查询平台主要给用户展示国内外的疫情相关数据，例如每日新增的确诊人数、国内外疫情的发展趋势，疫情新闻热点，并提供当地的防疫政策给用户，以及疫情传播链和防疫小知识，以便用户能够及时获取到疫情期间的相关动态。
+
+**体验地址：**<https://static-acb7ba46-bcc3-4d15-b4a2-0fa52cccd59a.bspapp.com/>
+
 ## 环境准备
 
 **一、克隆项目**
@@ -20,11 +23,10 @@ git clone https://github.com/y3000/COVID_InfoQuery.git
 **三、本地调试**
 
 ```
-1. 打开HBuilderX -> 顶部菜单栏 -> 运行 -> 运行到浏览器 -> Chrome
-2. 编译过程中，根据提示安装必要的插件，安装完成后重新编译运行
+1. 安装依赖： npm install
+2. 打开HBuilderX -> 顶部菜单栏 -> 运行 -> 运行到浏览器 -> Chrome
+3. 编译过程中，根据提示安装必要的插件，安装完成后重新编译运行
 ```
-
-
 
 
 
@@ -67,3 +69,4 @@ You are very welcome to join！[Raise an issue](https://github.com/anncwb/vue-vb
 
 ## 团队成员
 
+杨芊、曾婷、董泽萍、陈付旻、叶永飞
